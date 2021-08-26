@@ -1,0 +1,57 @@
+server:
+  port: 30005
+  error: 
+    include-message: always
+  
+spring:
+  application:
+    name: "voting-control-management"
+  main:
+    banner-mode: "off"
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/votingControl-ms
+      database: votingControl-ms
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        prefix: config
+        defaultContext: apps
+        profileSeparator: '::'
+  rabbitmq:
+    addresses: localhost:5672
+    username: guest
+    password: guest
+    virtual-host: /
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+          
+springdoc:
+#  api-docs:
+#    enabled: true
+  swagger-ui:
+    enabled: true
+#    path: /v1/openapi
+
+logging:
+  level:
+    root: INFO 
+
+rabbitmq:
+  exchange: controlvoting.exchange.totalized
+  queue: controlvoting.queue.totalized
+  routingKey:  controlvoting.votes
+      
+consulta_associado:
+  url: https://user-info.herokuapp.com
+  path: /users/{cpf}
+  
+openApi:
+  name: Voting control and management
+  description: Are exposed three endoints, one to create agendas, other to list open agendas and other to receive votes  
+  version: 1
